@@ -142,31 +142,30 @@ class AICoachModule {
             // Build current system prompt with latest context
             const systemPrompt = buildConversationPrompt(userProgress, options.mode || 'conversation');
 
-            // Prepare request body
-            const requestBody = {
-                contents: [
-                    {
-                        role: 'user',
-                        parts: [{ text: systemPrompt }]
-                    },
-                    {
-                        role: 'model',
-                        parts: [{ text: 'I understand. I am Maggy, ready to help practice English!' }]
-                    },
-                    ...this.conversationHistory
-                ],
-                generationConfig: {
-                    temperature: 0.8,
-                    topK: 40,
-                    topP: 0.95,
-                    maxOutputTokens: 256, // Keep responses short
+            // Build simple contents array
+            const contents = [
+                {
+                    role: 'user',
+                    parts: [{ text: systemPrompt + '\n\nRespond as Maggy, the English coach.' }]
                 },
-                safetySettings: [
-                    { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
-                    { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
-                    { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
-                    { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' }
-                ]
+                {
+                    role: 'model',
+                    parts: [{ text: 'I understand! I am Maggy, ready to help you practice English! 😊' }]
+                }
+            ];
+
+            // Add conversation history
+            for (const msg of this.conversationHistory) {
+                contents.push(msg);
+            }
+
+            // Prepare simplified request body
+            const requestBody = {
+                contents: contents,
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 256
+                }
             };
 
             // Make API request
