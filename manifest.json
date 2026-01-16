@@ -1,0 +1,78 @@
+{
+  "name": "Maggy - English Coach",
+  "short_name": "Maggy",
+  "description": "Your AI-powered English speaking coach. Master fundamental verbs through gamified conversation practice.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0F0F1A",
+  "theme_color": "#7C3AED",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/assets/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Quick Chat",
+      "short_name": "Chat",
+      "description": "Start a conversation with Maggy",
+      "url": "/#conversation",
+      "icons": [{ "src": "/assets/icons/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Daily Practice",
+      "short_name": "Practice",
+      "description": "Continue your daily practice",
+      "url": "/#lessons",
+      "icons": [{ "src": "/assets/icons/icon-96.png", "sizes": "96x96" }]
+    }
+  ]
+}
