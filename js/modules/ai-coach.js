@@ -170,6 +170,7 @@ class AICoachModule {
             };
 
             // Make API request
+            console.log('Sending to Gemini API...');
             const response = await fetch(`${API_URL}?key=${this.apiKey}`, {
                 method: 'POST',
                 headers: {
@@ -178,9 +179,13 @@ class AICoachModule {
                 body: JSON.stringify(requestBody)
             });
 
+            console.log('API Response status:', response.status);
+
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.error?.message || `API error: ${response.status}`);
+                console.error('API Error:', errorData);
+                const errorMsg = errorData.error?.message || `API error: ${response.status}`;
+                throw new Error(errorMsg);
             }
 
             const data = await response.json();
