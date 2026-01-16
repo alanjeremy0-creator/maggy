@@ -8,16 +8,55 @@ import { voice } from '../modules/voice.js';
 import { progress } from '../modules/progress.js';
 
 let isInitialized = false;
+let messagesContainer = null;
+
+// Helper functions (moved outside for proper scope)
+function addMessage(text, sender) {
+  if (!messagesContainer) {
+    messagesContainer = document.getElementById('chat-messages');
+  }
+  const bubble = document.createElement('div');
+  bubble.className = `chat-bubble chat-bubble--${sender}`;
+  bubble.innerHTML = `<p class="chat-bubble__text">${formatMessage(text)}</p>`;
+  messagesContainer.appendChild(bubble);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  return bubble;
+}
+
+function formatMessage(text) {
+  if (!text) return '';
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/❌\s*(.*?)(?=(?:✅|$))/g, '<span style="color: var(--accent-error)">❌ $1</span>')
+    .replace(/✅\s*(.*?)(?=(?:❌|$))/g, '<span style="color: var(--accent-success)">✅ $1</span>');
+}
+
+function addTypingIndicator() {
+  if (!messagesContainer) {
+    messagesContainer = document.getElementById('chat-messages');
+  }
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble chat-bubble--ai';
+  bubble.innerHTML = `
+    <p class="chat-bubble__text">
+      <span class="animate-pulse">Thinking...</span>
+    </p>
+  `;
+  messagesContainer.appendChild(bubble);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  return bubble;
+}
 
 export async function renderConversation(params) {
-    const lessonId = params?.id || null;
+  const lessonId = params?.id || null;
 
-    // Check API key
-    if (!aiCoach.hasApiKey()) {
-        return renderApiKeySetup();
-    }
+  // Check API key
+  if (!aiCoach.hasApiKey()) {
+    return renderApiKeySetup();
+  }
 
-    return `
+  return `
     <div class="conversation-view">
       <!-- Header -->
       <div class="conversation-header">
@@ -51,13 +90,11 @@ export async function renderConversation(params) {
         </button>
       </div>
     </div>
-
-    <!-- Voice Overlay (global, moved outside for proper positioning) -->
   `;
 }
 
 function renderApiKeySetup() {
-    return `
+  return `
     <div class="view onboarding-view">
       <span class="onboarding-logo">🔑</span>
       <h1 class="onboarding-title">API Key Required</h1>
@@ -83,194 +120,160 @@ function renderApiKeySetup() {
 }
 
 export async function initConversationEvents(params) {
-    // Check if we need API key setup
-    if (!aiCoach.hasApiKey()) {
-        initApiKeyForm();
-        return;
+  // Check if we need API key setup
+  if (!aiCoach.hasApiKey()) {
+    initApiKeyForm();
+    return;
+  }
+
+  const lessonId = params?.id || null;
+  messagesContainer = document.getElementById('chat-messages');
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('send-btn');
+  const voiceBtn = document.getElementById('voice-btn');
+
+  if (!messagesContainer || !input || !sendBtn) {
+    console.error('Chat elements not found');
+    return;
+  }
+
+  // Send message function
+  async function sendMessage(text) {
+    if (!text.trim()) return;
+
+    // Add user message
+    addMessage(text, 'user');
+    input.value = '';
+    input.disabled = true;
+    sendBtn.disabled = true;
+
+    // Show typing indicator
+    const typingBubble = addTypingIndicator();
+
+    try {
+      const response = await aiCoach.sendMessage(text);
+
+      // Remove typing indicator
+      typingBubble.remove();
+
+      // Add AI response
+      addMessage(response, 'ai');
+
+      // Speak response
+      if (!voice.silentMode) {
+        await voice.speak(response);
+      }
+    } catch (error) {
+      console.error('AI error:', error);
+      typingBubble.remove();
+      addMessage("Sorry, I couldn't process that. Try again?", 'ai');
     }
 
-    const lessonId = params?.id || null;
-    const messagesContainer = document.getElementById('chat-messages');
-    const input = document.getElementById('chat-input');
-    const sendBtn = document.getElementById('send-btn');
-    const voiceBtn = document.getElementById('voice-btn');
-    const voiceOverlay = document.getElementById('voice-overlay');
-    const voiceTranscript = document.getElementById('voice-transcript');
-    const stopListeningBtn = document.getElementById('stop-listening');
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+  }
 
-    // Initialize conversation
-    if (!isInitialized) {
-        try {
-            const greeting = await aiCoach.startConversation(lessonId);
-            messagesContainer.innerHTML = '';
-            addMessage(greeting, 'ai');
+  // Initialize conversation
+  if (!isInitialized) {
+    try {
+      const greeting = await aiCoach.startConversation(lessonId);
+      messagesContainer.innerHTML = '';
+      addMessage(greeting, 'ai');
 
-            // Speak greeting
-            if (!voice.silentMode) {
-                await voice.speak(greeting);
-            }
+      // Speak greeting
+      if (!voice.silentMode) {
+        await voice.speak(greeting);
+      }
 
-            isInitialized = true;
-        } catch (error) {
-            addMessage('Error starting conversation. Please check your API key.', 'ai');
-        }
+      isInitialized = true;
+    } catch (error) {
+      console.error('Conversation init error:', error);
+      messagesContainer.innerHTML = '';
+      addMessage('Error starting conversation. Please check your API key.', 'ai');
+    }
+  }
+
+  // Send button click
+  sendBtn.addEventListener('click', () => {
+    console.log('Send button clicked');
+    sendMessage(input.value);
+  });
+
+  // Enter key
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(input.value);
+    }
+  });
+
+  // Voice input
+  voiceBtn.addEventListener('click', async () => {
+    console.log('Voice button clicked');
+
+    if (!voice.getCapabilities().recognition) {
+      addMessage("Voice recognition isn't supported in your browser. Try Chrome!", 'ai');
+      return;
     }
 
-    // Send message function
-    async function sendMessage(text) {
-        if (!text.trim()) return;
+    try {
+      addMessage("🎤 Listening... (speak now)", 'ai');
 
-        // Add user message
-        addMessage(text, 'user');
-        input.value = '';
-        input.disabled = true;
-        sendBtn.disabled = true;
+      const result = await voice.listen({
+        onInterim: (text) => {
+          console.log('Interim:', text);
+        },
+        timeout: 10000
+      });
 
-        // Show typing indicator
-        const typingBubble = addTypingIndicator();
-
-        try {
-            const response = await aiCoach.sendMessage(text);
-
-            // Remove typing indicator
-            typingBubble.remove();
-
-            // Add AI response
-            addMessage(response, 'ai');
-
-            // Speak response
-            if (!voice.silentMode) {
-                await voice.speak(response);
-            }
-        } catch (error) {
-            typingBubble.remove();
-            addMessage("Sorry, I couldn't process that. Try again?", 'ai');
-        }
-
-        input.disabled = false;
-        sendBtn.disabled = false;
-        input.focus();
+      if (result.transcript) {
+        sendMessage(result.transcript);
+      }
+    } catch (error) {
+      console.error('Voice error:', error);
+      if (error.code === 'no_speech') {
+        addMessage("I didn't hear anything. Try again?", 'ai');
+      } else if (error.code !== 'aborted') {
+        addMessage("Couldn't use the microphone. Check your permissions!", 'ai');
+      }
     }
+  });
 
-    // Add message to chat
-    function addMessage(text, sender) {
-        const bubble = document.createElement('div');
-        bubble.className = `chat-bubble chat-bubble--${sender}`;
-        bubble.innerHTML = `<p class="chat-bubble__text">${formatMessage(text)}</p>`;
-        messagesContainer.appendChild(bubble);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        return bubble;
-    }
+  // Settings button
+  document.getElementById('chat-settings')?.addEventListener('click', () => {
+    showSettings();
+  });
 
-    // Format message with basic markdown
-    function formatMessage(text) {
-        return text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\*(.*?)\*/g, '<em>$1</em>')
-            .replace(/❌\s*(.*?)(?=(?:✅|$))/g, '<span style="color: var(--accent-error)">❌ $1</span>')
-            .replace(/✅\s*(.*?)(?=(?:❌|$))/g, '<span style="color: var(--accent-success)">✅ $1</span>');
-    }
-
-    // Add typing indicator
-    function addTypingIndicator() {
-        const bubble = document.createElement('div');
-        bubble.className = 'chat-bubble chat-bubble--ai';
-        bubble.innerHTML = `
-      <p class="chat-bubble__text">
-        <span class="animate-pulse">Thinking...</span>
-      </p>
-    `;
-        messagesContainer.appendChild(bubble);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        return bubble;
-    }
-
-    // Send button
-    sendBtn?.addEventListener('click', () => {
-        sendMessage(input.value);
-    });
-
-    // Enter key
-    input?.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage(input.value);
-        }
-    });
-
-    // Voice input
-    voiceBtn?.addEventListener('click', async () => {
-        if (!voice.getCapabilities().recognition) {
-            addMessage("Voice recognition isn't supported in your browser. Try Chrome!", 'ai');
-            return;
-        }
-
-        // Show overlay
-        voiceOverlay?.classList.remove('hidden');
-        voiceTranscript.textContent = '';
-
-        try {
-            const result = await voice.listen({
-                onInterim: (text) => {
-                    voiceTranscript.textContent = text;
-                },
-                timeout: 10000
-            });
-
-            voiceOverlay?.classList.add('hidden');
-
-            if (result.transcript) {
-                sendMessage(result.transcript);
-            }
-        } catch (error) {
-            voiceOverlay?.classList.add('hidden');
-
-            if (error.code === 'no_speech') {
-                addMessage("I didn't hear anything. Try again?", 'ai');
-            } else if (error.code !== 'aborted') {
-                addMessage("Couldn't use the microphone. Check your permissions!", 'ai');
-            }
-        }
-    });
-
-    // Stop listening
-    stopListeningBtn?.addEventListener('click', () => {
-        voice.stopListening();
-        voiceOverlay?.classList.add('hidden');
-    });
-
-    // Settings button
-    document.getElementById('chat-settings')?.addEventListener('click', () => {
-        showSettings();
-    });
+  console.log('Conversation events initialized');
 }
 
 function initApiKeyForm() {
-    const form = document.getElementById('api-key-form');
-    const input = document.getElementById('api-key-input');
+  const form = document.getElementById('api-key-form');
+  const input = document.getElementById('api-key-input');
 
-    form?.addEventListener('submit', async (e) => {
-        e.preventDefault();
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        const key = input.value.trim();
-        if (!key) return;
+    const key = input.value.trim();
+    if (!key) return;
 
-        // Save key
-        aiCoach.setApiKey(key);
+    // Save key
+    aiCoach.setApiKey(key);
 
-        // Reload the view
-        location.reload();
-    });
+    // Reload the view
+    location.reload();
+  });
 }
 
 async function showSettings() {
-    const profile = await progress.getProfile();
-    const silentMode = profile.settings?.silentMode || false;
+  const profile = await progress.getProfile();
+  const silentMode = profile.settings?.silentMode || false;
 
-    const modal = document.createElement('div');
-    modal.className = 'settings-modal';
-    modal.id = 'settings-modal';
-    modal.innerHTML = `
+  const modal = document.createElement('div');
+  modal.className = 'settings-modal';
+  modal.id = 'settings-modal';
+  modal.innerHTML = `
     <div class="settings-content">
       <div class="settings-handle"></div>
       <h2 class="settings-title">Settings</h2>
@@ -313,52 +316,52 @@ async function showSettings() {
     </div>
   `;
 
-    document.body.appendChild(modal);
+  document.body.appendChild(modal);
 
-    // Close on background click
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.remove();
-        }
-    });
+  // Close on background click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
 
-    // Close button
-    document.getElementById('close-settings')?.addEventListener('click', () => {
-        modal.remove();
-    });
+  // Close button
+  document.getElementById('close-settings')?.addEventListener('click', () => {
+    modal.remove();
+  });
 
-    // Silent mode toggle
-    document.getElementById('toggle-silent')?.addEventListener('click', async (e) => {
-        const toggle = e.currentTarget;
-        const newValue = !toggle.classList.contains('active');
+  // Silent mode toggle
+  document.getElementById('toggle-silent')?.addEventListener('click', async (e) => {
+    const toggle = e.currentTarget;
+    const newValue = !toggle.classList.contains('active');
 
-        toggle.classList.toggle('active', newValue);
-        voice.setSilentMode(newValue);
-        await progress.updateSettings({ silentMode: newValue });
-    });
+    toggle.classList.toggle('active', newValue);
+    voice.setSilentMode(newValue);
+    await progress.updateSettings({ silentMode: newValue });
+  });
 
-    // Clear chat
-    document.getElementById('clear-chat')?.addEventListener('click', () => {
-        if (confirm('Clear chat history?')) {
-            aiCoach.clearHistory();
-            isInitialized = false;
-            modal.remove();
-            location.reload();
-        }
-    });
+  // Clear chat
+  document.getElementById('clear-chat')?.addEventListener('click', () => {
+    if (confirm('Clear chat history?')) {
+      aiCoach.clearHistory();
+      isInitialized = false;
+      modal.remove();
+      location.reload();
+    }
+  });
 
-    // Change API key
-    document.getElementById('change-api-key')?.addEventListener('click', () => {
-        const newKey = prompt('Enter new Gemini API key:');
-        if (newKey) {
-            aiCoach.setApiKey(newKey);
-            modal.remove();
-            location.reload();
-        }
-    });
+  // Change API key
+  document.getElementById('change-api-key')?.addEventListener('click', () => {
+    const newKey = prompt('Enter new Gemini API key:');
+    if (newKey) {
+      aiCoach.setApiKey(newKey);
+      modal.remove();
+      location.reload();
+    }
+  });
 }
 
 export default {
-    render: renderConversation,
-    afterRender: initConversationEvents
+  render: renderConversation,
+  afterRender: initConversationEvents
 };
