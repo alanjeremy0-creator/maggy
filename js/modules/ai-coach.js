@@ -6,8 +6,8 @@
 import { buildConversationPrompt, GREETING_MESSAGES, randomResponse } from '../data/prompts.js';
 import progress from './progress.js';
 
-// Gemini API endpoint - using gemini-1.5-flash-latest
-const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+// Gemini API endpoint
+const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 class AICoachModule {
     constructor() {
