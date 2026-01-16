@@ -302,10 +302,15 @@ async function showSettings() {
           </div>
         </div>
         
-        <div class="settings-item" style="cursor: pointer;" id="change-api-key">
-          <div>
-            <p class="settings-item__label">Change API Key</p>
-            <p class="settings-item__description">Update your Gemini API key</p>
+        <div class="settings-item">
+          <div style="width: 100%;">
+            <p class="settings-item__label">API Key</p>
+            <input type="text" 
+                   id="api-key-field" 
+                   class="input" 
+                   placeholder="Paste your Gemini API key"
+                   style="width: 100%; margin-top: 8px; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: white;">
+            <button id="save-api-key" class="btn btn-primary" style="margin-top: 8px; width: 100%;">Save API Key</button>
           </div>
         </div>
       </div>
@@ -350,13 +355,16 @@ async function showSettings() {
     }
   });
 
-  // Change API key
-  document.getElementById('change-api-key')?.addEventListener('click', () => {
-    const newKey = prompt('Enter new Gemini API key:');
+  // Save API key
+  document.getElementById('save-api-key')?.addEventListener('click', () => {
+    const apiKeyField = document.getElementById('api-key-field');
+    const newKey = apiKeyField?.value?.trim();
     if (newKey) {
       aiCoach.setApiKey(newKey);
       modal.remove();
       location.reload();
+    } else {
+      alert('Please enter an API key');
     }
   });
 }
