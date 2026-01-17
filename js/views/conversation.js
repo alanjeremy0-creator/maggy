@@ -174,26 +174,7 @@ export async function initConversationEvents(params) {
     input.focus();
   }
 
-  // Initialize conversation
-  if (!isInitialized) {
-    try {
-      const greeting = await aiCoach.startConversation(lessonId);
-      messagesContainer.innerHTML = '';
-      addMessage(greeting, 'ai');
-
-      // Speak greeting
-      if (!voice.silentMode) {
-        await voice.speak(greeting);
-      }
-
-      isInitialized = true;
-    } catch (error) {
-      console.error('Conversation init error:', error);
-      messagesContainer.innerHTML = '';
-      addMessage('Error starting conversation. Please check your API key.', 'ai');
-    }
-  }
-
+  // ATTACH EVENT LISTENERS FIRST (before async operations)
   // Send button click
   sendBtn.addEventListener('click', () => {
     console.log('Send button clicked');
@@ -245,7 +226,32 @@ export async function initConversationEvents(params) {
     showSettings();
   });
 
-  console.log('Conversation events initialized');
+  console.log('Conversation events initialized - buttons ready!');
+
+  // NOW initialize conversation (async, won't block buttons)
+  if (!isInitialized) {
+    initializeConversation(lessonId);
+  }
+}
+
+// Separate async function for initialization
+async function initializeConversation(lessonId) {
+  try {
+    const greeting = await aiCoach.startConversation(lessonId);
+    messagesContainer.innerHTML = '';
+    addMessage(greeting, 'ai');
+
+    // Speak greeting
+    if (!voice.silentMode) {
+      await voice.speak(greeting);
+    }
+
+    isInitialized = true;
+  } catch (error) {
+    console.error('Conversation init error:', error);
+    messagesContainer.innerHTML = '';
+    addMessage('Error starting conversation. Please check your API key.', 'ai');
+  }
 }
 
 function initApiKeyForm() {
