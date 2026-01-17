@@ -141,6 +141,12 @@ export async function initConversationEvents(params) {
   async function sendMessage(text) {
     if (!text.trim()) return;
 
+    // IMPORTANT: Prime audio immediately on user action to unlock TTS
+    // This prevents browser autoplay policy from blocking speech later
+    if (!voice.silentMode) {
+      voice.primeAudio();
+    }
+
     // Add user message
     addMessage(text, 'user');
     input.value = '';

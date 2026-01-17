@@ -74,6 +74,20 @@ class VoiceModule {
     // ==========================================
 
     /**
+     * Prime audio context - call immediately on user action
+     * This unlocks the browser's audio context for later TTS
+     */
+    primeAudio() {
+        if (this.silentMode) return;
+
+        // Speak empty string to "unlock" audio context
+        const utterance = new SpeechSynthesisUtterance('');
+        utterance.volume = 0;
+        this.synthesis.speak(utterance);
+        console.log('Audio context primed');
+    }
+
+    /**
      * Speak text aloud
      * @param {string} text - Text to speak
      * @param {Object} options - { slow: boolean, onStart: fn, onEnd: fn }
@@ -86,42 +100,57 @@ class VoiceModule {
                 return;
             }
 
-            // Cancel any ongoing speech
-            this.synthesis.cancel();
-
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.rate = options.slow ? 0.75 : this.speechRate;
-            utterance.pitch = 1.05; // Slightly higher for friendly tone
-            utterance.volume = 1.0;
-
-            if (this.preferredVoice) {
-                utterance.voice = this.preferredVoice;
+            // Wait for any pending speech to finish instead of canceling
+            // This prevents the 'canceled' error
+            if (this.synthesis.speaking) {
+                this.synthesis.cancel();
+                // Small delay after cancel
+                setTimeout(() => {
+                    this._doSpeak(text, options, resolve, reject);
+                }, 50);
+            } else {
+                this._doSpeak(text, options, resolve, reject);
             }
-
-            utterance.onstart = () => {
-                this.isSpeaking = true;
-                options.onStart?.();
-            };
-
-            utterance.onend = () => {
-                this.isSpeaking = false;
-                options.onEnd?.();
-                resolve();
-            };
-
-            utterance.onerror = (error) => {
-                this.isSpeaking = false;
-                // Don't reject on 'canceled' errors
-                if (error.error !== 'canceled') {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            };
-
-            this.synthesis.speak(utterance);
         });
+    }
+
+    /**
+     * Internal speak implementation
+     */
+    _doSpeak(text, options, resolve, reject) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = options.slow ? 0.75 : this.speechRate;
+        utterance.pitch = 1.05; // Slightly higher for friendly tone
+        utterance.volume = 1.0;
+
+        if (this.preferredVoice) {
+            utterance.voice = this.preferredVoice;
+        }
+
+        utterance.onstart = () => {
+            this.isSpeaking = true;
+            options.onStart?.();
+        };
+
+        utterance.onend = () => {
+            this.isSpeaking = false;
+            options.onEnd?.();
+            resolve();
+        };
+
+        utterance.onerror = (error) => {
+            this.isSpeaking = false;
+            console.warn('Speech error:', error.error);
+            // Don't reject on 'canceled' or 'interrupted' errors
+            if (error.error !== 'canceled' && error.error !== 'interrupted') {
+                reject(error);
+            } else {
+                resolve();
+            }
+        };
+
+        this.synthesis.speak(utterance);
     }
 
     /**
