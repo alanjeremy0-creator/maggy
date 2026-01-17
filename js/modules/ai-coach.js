@@ -365,3 +365,4 @@ Only respond with JSON, nothing else.`;
 // Export singleton
 export const aiCoach = new AICoachModule();
 export default aiCoach;
+// Redeploy trigger: 1768612573
