@@ -78,13 +78,22 @@ class VoiceModule {
      * This unlocks the browser's audio context for later TTS
      */
     primeAudio() {
-        if (this.silentMode) return;
+        console.log('🔓 primeAudio() called', { silentMode: this.silentMode, hasSynthesis: !!this.synthesis });
+        if (this.silentMode) {
+            console.log('🔇 Silent mode - skipping audio priming');
+            return;
+        }
+
+        if (!this.synthesis) {
+            console.warn('⚠️ No speech synthesis available to prime');
+            return;
+        }
 
         // Speak empty string to "unlock" audio context
         const utterance = new SpeechSynthesisUtterance('');
         utterance.volume = 0;
         this.synthesis.speak(utterance);
-        console.log('Audio context primed');
+        console.log('✅ Audio context primed successfully');
     }
 
     /**
@@ -94,15 +103,27 @@ class VoiceModule {
      * @returns {Promise} Resolves when speaking is done
      */
     speak(text, options = {}) {
+        console.log('🔊 voice.speak() called', { text: text?.substring(0, 50), silentMode: this.silentMode });
+
         return new Promise((resolve, reject) => {
             if (this.silentMode) {
+                console.log('🔇 Silent mode is ON - skipping speech');
                 resolve();
                 return;
             }
 
+            if (!this.synthesis) {
+                console.error('❌ Speech synthesis not available');
+                resolve();
+                return;
+            }
+
+            console.log('🔊 Speech synthesis available, preparing to speak...');
+
             // Wait for any pending speech to finish instead of canceling
             // This prevents the 'canceled' error
             if (this.synthesis.speaking) {
+                console.log('⏳ Already speaking, canceling and retrying...');
                 this.synthesis.cancel();
                 // Small delay after cancel
                 setTimeout(() => {
@@ -118,6 +139,8 @@ class VoiceModule {
      * Internal speak implementation
      */
     _doSpeak(text, options, resolve, reject) {
+        console.log('🎤 _doSpeak() starting', { textLength: text?.length, hasVoice: !!this.preferredVoice });
+
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US';
         utterance.rate = options.slow ? 0.75 : this.speechRate;
@@ -126,14 +149,19 @@ class VoiceModule {
 
         if (this.preferredVoice) {
             utterance.voice = this.preferredVoice;
+            console.log('🗣️ Using voice:', this.preferredVoice.name);
+        } else {
+            console.log('⚠️ No preferred voice set, using browser default');
         }
 
         utterance.onstart = () => {
+            console.log('▶️ Speech started');
             this.isSpeaking = true;
             options.onStart?.();
         };
 
         utterance.onend = () => {
+            console.log('⏹️ Speech ended');
             this.isSpeaking = false;
             options.onEnd?.();
             resolve();
@@ -141,7 +169,7 @@ class VoiceModule {
 
         utterance.onerror = (error) => {
             this.isSpeaking = false;
-            console.warn('Speech error:', error.error);
+            console.error('❌ Speech error:', error.error, error);
             // Don't reject on 'canceled' or 'interrupted' errors
             if (error.error !== 'canceled' && error.error !== 'interrupted') {
                 reject(error);
@@ -150,7 +178,9 @@ class VoiceModule {
             }
         };
 
+        console.log('🔈 Calling synthesis.speak()...');
         this.synthesis.speak(utterance);
+        console.log('📤 synthesis.speak() called, utterance queued');
     }
 
     /**
