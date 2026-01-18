@@ -104,26 +104,63 @@ class QuizModule {
      * Check if answer is correct
      */
     checkAnswer(question, answer) {
-        const normalize = (str) => str.toLowerCase().trim();
+        const normalize = (str) => str?.toLowerCase().trim().replace(/[.,!?;:'"]/g, '');
 
         switch (question.type) {
             case 'fill-blank':
             case 'multiple-choice':
-            case 'reorder':
             case 'transform':
+            case 'stress':
                 return normalize(answer) === normalize(question.correct);
+
+            case 'reorder':
+                // Compare normalized sentences
+                return normalize(answer) === normalize(question.correct);
+
+            case 'listening':
+                // More lenient for listening - allow minor differences
+                const userInput = normalize(answer);
+                const correctAnswer = normalize(question.correct);
+                // Exact match or very close (allowing for minor typos)
+                if (userInput === correctAnswer) return true;
+                // Check similarity (at least 90% similar)
+                return this.similarity(userInput, correctAnswer) >= 0.9;
+
+            case 'word-scramble':
+                // Case insensitive comparison
+                return answer?.toUpperCase().trim() === question.correct?.toUpperCase().trim();
 
             case 'audio-match':
                 // For pronunciation, we're more lenient
-                // This would be used with voice comparison
                 return normalize(answer) === normalize(question.target || question.correct);
-
-            case 'stress':
-                return normalize(answer) === normalize(question.correct);
 
             default:
                 return normalize(answer) === normalize(question.correct);
         }
+    }
+
+    /**
+     * Calculate similarity between two strings (Levenshtein distance based)
+     */
+    similarity(str1, str2) {
+        if (!str1 || !str2) return 0;
+        if (str1 === str2) return 1;
+
+        const longer = str1.length > str2.length ? str1 : str2;
+        const shorter = str1.length > str2.length ? str2 : str1;
+
+        if (longer.length === 0) return 1;
+
+        // Simple character-by-character comparison
+        let matches = 0;
+        const longerArr = longer.split('');
+        const shorterArr = shorter.split('');
+
+        shorterArr.forEach((char, i) => {
+            if (longerArr[i] === char) matches++;
+        });
+
+        return matches / longer.length;
     }
 
     /**
