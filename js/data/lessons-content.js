@@ -445,6 +445,466 @@ export const CURRICULUM = [
       "Have a conversation using only contractions",
       "Describe your day using natural pronunciation"
     ]
+  },
+  {
+    id: 'present-continuous',
+    title: 'Present Continuous',
+    subtitle: 'Actions in Progress',
+    description: 'Talk about what is happening now',
+    icon: '⏳',
+    order: 7,
+    unlocked: false,
+    concepts: ['am/is/are + -ing', 'right now', 'at the moment'],
+    prerequisites: ['pronunciation-basics'],
+    theory: {
+      explanation: "Use Present Continuous for actions happening RIGHT NOW or around this time. Form: Subject + am/is/are + verb-ing. Example: I am working. She is eating.",
+      keyPoints: [
+        "I am + verb-ing (I am eating)",
+        "He/She/It is + verb-ing (She is working)",
+        "You/We/They are + verb-ing (They are playing)",
+        "Spelling: drop 'e' before -ing (make → making), double consonant after short vowel (run → running)"
+      ]
+    },
+    examples: [
+      { english: "I am studying English.", spanish: "Estoy estudiando inglés.", audio: true },
+      { english: "She is cooking dinner.", spanish: "Ella está cocinando la cena.", audio: true },
+      { english: "They are watching a movie.", spanish: "Están viendo una película.", audio: true },
+      { english: "He is running in the park.", spanish: "Él está corriendo en el parque.", audio: true },
+      { english: "We are having lunch.", spanish: "Estamos almorzando.", audio: true },
+      { english: "The baby is sleeping.", spanish: "El bebé está durmiendo.", audio: true }
+    ],
+    quiz: [
+      {
+        id: 'pc-1',
+        type: 'fill-blank',
+        question: "I ___ working from home today.",
+        options: ['am', 'is', 'are'],
+        correct: 'am',
+        explanation: "With 'I', use 'am'."
+      },
+      {
+        id: 'pc-2',
+        type: 'fill-blank',
+        question: "She ___ reading a book right now.",
+        options: ['am', 'is', 'are'],
+        correct: 'is',
+        explanation: "With 'she', use 'is'."
+      },
+      {
+        id: 'pc-3',
+        type: 'fill-blank',
+        question: "They ___ playing soccer.",
+        options: ['am', 'is', 'are'],
+        correct: 'are',
+        explanation: "With 'they', use 'are'."
+      },
+      {
+        id: 'pc-4',
+        type: 'fill-blank',
+        question: "He is ___ (run) very fast.",
+        options: ['runing', 'running', 'runinng'],
+        correct: 'running',
+        explanation: "Double the consonant after a short vowel: run → running."
+      },
+      {
+        id: 'pc-5',
+        type: 'fill-blank',
+        question: "She is ___ (make) a cake.",
+        options: ['makeing', 'making', 'makking'],
+        correct: 'making',
+        explanation: "Drop the 'e' before adding -ing: make → making."
+      },
+      {
+        id: 'pc-6',
+        type: 'multiple-choice',
+        question: "Which sentence is correct?",
+        options: ["I working now.", "I am working now.", "I is working now."],
+        correct: "I am working now.",
+        explanation: "Present Continuous needs: Subject + am/is/are + verb-ing."
+      },
+      {
+        id: 'pc-7',
+        type: 'fill-blank',
+        question: "The children ___ playing in the garden.",
+        options: ['am', 'is', 'are'],
+        correct: 'are',
+        explanation: "With 'children' (plural), use 'are'."
+      },
+      {
+        id: 'pc-8',
+        type: 'transform',
+        question: "Make continuous: 'She writes emails.'",
+        options: ["She is writing emails.", "She are writing emails.", "She writing emails."],
+        correct: "She is writing emails.",
+        explanation: "She + is + verb-ing."
+      },
+      {
+        id: 'pc-9',
+        type: 'fill-blank',
+        question: "Look! It ___ raining outside.",
+        options: ['am', 'is', 'are'],
+        correct: 'is',
+        explanation: "With 'it', use 'is'."
+      },
+      {
+        id: 'pc-10',
+        type: 'multiple-choice',
+        question: "What are you doing? - I ___ TV.",
+        options: ["am watch", "am watching", "watching"],
+        correct: "am watching",
+        explanation: "Present Continuous: I am + verb-ing."
+      }
+    ],
+    conversationStarters: [
+      "Tell me what you are doing right now",
+      "Describe what people around you are doing",
+      "What is happening in your city today?"
+    ]
+  },
+  {
+    id: 'verb-will',
+    title: 'Future with WILL',
+    subtitle: 'Predictions & Decisions',
+    description: 'Talk about the future',
+    icon: '🔮',
+    order: 8,
+    unlocked: false,
+    concepts: ['will + verb', "won't", 'predictions'],
+    prerequisites: ['present-continuous'],
+    theory: {
+      explanation: "Use WILL for future predictions, promises, and instant decisions. Form: Subject + will + base verb. Negative: won't (will not). Will is the same for ALL subjects!",
+      keyPoints: [
+        "Affirmative: I/You/He/She/It/We/They + will + verb (I will help you)",
+        "Negative: will not = won't (She won't come)",
+        "Question: Will + subject + verb? (Will you call me?)",
+        "Use for: predictions, promises, offers, instant decisions"
+      ]
+    },
+    examples: [
+      { english: "I will call you tomorrow.", spanish: "Te llamaré mañana.", audio: true },
+      { english: "She won't be late.", spanish: "Ella no llegará tarde.", audio: true },
+      { english: "Will you help me?", spanish: "¿Me ayudarás?", audio: true },
+      { english: "It will rain later.", spanish: "Lloverá más tarde.", audio: true },
+      { english: "They will arrive at 8.", spanish: "Llegarán a las 8.", audio: true },
+      { english: "I'll have the chicken, please.", spanish: "Tomaré el pollo, por favor.", audio: true }
+    ],
+    quiz: [
+      {
+        id: 'will-1',
+        type: 'fill-blank',
+        question: "I ___ help you with that.",
+        options: ['will', 'am will', 'willing'],
+        correct: 'will',
+        explanation: "Will + base verb (no 'am' needed)."
+      },
+      {
+        id: 'will-2',
+        type: 'fill-blank',
+        question: "She ___ come to the party.",
+        options: ['willn\'t', 'won\'t', 'will don\'t'],
+        correct: "won't",
+        explanation: "Negative of 'will' is 'won't'."
+      },
+      {
+        id: 'will-3',
+        type: 'fill-blank',
+        question: "___ you marry me?",
+        options: ['Will', 'Do', 'Are'],
+        correct: 'Will',
+        explanation: "Questions with will: Will + subject + verb."
+      },
+      {
+        id: 'will-4',
+        type: 'multiple-choice',
+        question: "Which is correct?",
+        options: ["I will to go.", "I will going.", "I will go."],
+        correct: "I will go.",
+        explanation: "Will + base verb (no 'to' or '-ing')."
+      },
+      {
+        id: 'will-5',
+        type: 'fill-blank',
+        question: "Don't worry, I ___ forget.",
+        options: ['will', 'won\'t', 'willn\'t'],
+        correct: "won't",
+        explanation: "Won't = will not."
+      },
+      {
+        id: 'will-6',
+        type: 'transform',
+        question: "Make negative: 'They will arrive late.'",
+        options: ["They won't arrive late.", "They willn't arrive late.", "They don't will arrive late."],
+        correct: "They won't arrive late.",
+        explanation: "Will → won't for negatives."
+      },
+      {
+        id: 'will-7',
+        type: 'fill-blank',
+        question: "I think it ___ be sunny tomorrow.",
+        options: ['will', 'is', 'going'],
+        correct: 'will',
+        explanation: "Predictions about the future use 'will'."
+      },
+      {
+        id: 'will-8',
+        type: 'multiple-choice',
+        question: "Someone's at the door. - I ___ get it!",
+        options: ["will", "'ll", "Both are correct"],
+        correct: "Both are correct",
+        explanation: "I'll = I will (contraction for instant decisions)."
+      },
+      {
+        id: 'will-9',
+        type: 'fill-blank',
+        question: "___ she be at the meeting?",
+        options: ['Will', 'Does', 'Is'],
+        correct: 'Will',
+        explanation: "Future questions: Will + subject + base verb."
+      },
+      {
+        id: 'will-10',
+        type: 'fill-blank',
+        question: "He ___ probably call you later.",
+        options: ['will', 'is', 'does'],
+        correct: 'will',
+        explanation: "Predictions use 'will' (will probably...)."
+      }
+    ],
+    conversationStarters: [
+      "What will you do this weekend?",
+      "Make predictions about the future",
+      "What do you think will happen tomorrow?"
+    ]
+  },
+  {
+    id: 'countable-uncountable',
+    title: 'Countable & Uncountable',
+    subtitle: 'Nouns that Count',
+    description: 'Learn when to use a, some, many, much',
+    icon: '🔢',
+    order: 9,
+    unlocked: false,
+    concepts: ['a/an', 'some/any', 'many/much'],
+    prerequisites: ['verb-will'],
+    theory: {
+      explanation: "Countable nouns can be counted (one apple, two apples). Uncountable nouns cannot be counted (water, rice, money). This affects which words you use with them!",
+      keyPoints: [
+        "Countable: a/an, many, few, a lot of (an apple, many books)",
+        "Uncountable: some, much, a little, a lot of (some water, much time)",
+        "Common uncountable: water, rice, bread, money, information, advice, music, furniture",
+        "Some uncountable nouns seem countable but aren't: news, homework, luggage"
+      ]
+    },
+    examples: [
+      { english: "I have an apple.", spanish: "Tengo una manzana.", audio: true },
+      { english: "There is some water.", spanish: "Hay algo de agua.", audio: true },
+      { english: "How many books do you have?", spanish: "¿Cuántos libros tienes?", audio: true },
+      { english: "How much money do you need?", spanish: "¿Cuánto dinero necesitas?", audio: true },
+      { english: "I don't have much time.", spanish: "No tengo mucho tiempo.", audio: true },
+      { english: "She gave me some advice.", spanish: "Me dio un consejo.", audio: true }
+    ],
+    quiz: [
+      {
+        id: 'cu-1',
+        type: 'fill-blank',
+        question: "I need ___ milk for the recipe.",
+        options: ['a', 'an', 'some'],
+        correct: 'some',
+        explanation: "Milk is uncountable, so use 'some'."
+      },
+      {
+        id: 'cu-2',
+        type: 'fill-blank',
+        question: "Can I have ___ apple?",
+        options: ['a', 'an', 'some'],
+        correct: 'an',
+        explanation: "'Apple' starts with a vowel, so use 'an'."
+      },
+      {
+        id: 'cu-3',
+        type: 'fill-blank',
+        question: "How ___ sugar do you want?",
+        options: ['many', 'much', 'a lot'],
+        correct: 'much',
+        explanation: "Sugar is uncountable, so use 'much'."
+      },
+      {
+        id: 'cu-4',
+        type: 'fill-blank',
+        question: "How ___ friends do you have?",
+        options: ['many', 'much', 'a lot'],
+        correct: 'many',
+        explanation: "Friends is countable, so use 'many'."
+      },
+      {
+        id: 'cu-5',
+        type: 'multiple-choice',
+        question: "Which is UNCOUNTABLE?",
+        options: ["Book", "Information", "Apple"],
+        correct: "Information",
+        explanation: "Information cannot be counted (NOT 'an information')."
+      },
+      {
+        id: 'cu-6',
+        type: 'fill-blank',
+        question: "I don't have ___ money.",
+        options: ['many', 'much', 'a'],
+        correct: 'much',
+        explanation: "Money is uncountable, so use 'much'."
+      },
+      {
+        id: 'cu-7',
+        type: 'multiple-choice',
+        question: "Which is correct?",
+        options: ["I need an advice.", "I need some advice.", "I need advices."],
+        correct: "I need some advice.",
+        explanation: "Advice is uncountable (no plural, no 'an')."
+      },
+      {
+        id: 'cu-8',
+        type: 'fill-blank',
+        question: "There are ___ oranges in the fridge.",
+        options: ['a', 'some', 'much'],
+        correct: 'some',
+        explanation: "'Some' works with plural countable nouns."
+      },
+      {
+        id: 'cu-9',
+        type: 'fill-blank',
+        question: "I have ___ homework to do.",
+        options: ['a lot of', 'many', 'a'],
+        correct: 'a lot of',
+        explanation: "Homework is uncountable. 'A lot of' works with both types."
+      },
+      {
+        id: 'cu-10',
+        type: 'multiple-choice',
+        question: "Which is correct?",
+        options: ["Two breads", "Two slices of bread", "A bread"],
+        correct: "Two slices of bread",
+        explanation: "Bread is uncountable. Use 'slices of' to count it."
+      }
+    ],
+    conversationStarters: [
+      "Tell me what food you have at home",
+      "Describe what you need to buy at the supermarket",
+      "Ask me about quantities using 'how much' and 'how many'"
+    ]
+  },
+  {
+    id: 'there-is-are',
+    title: 'There is / There are',
+    subtitle: 'Existence & Location',
+    description: 'Say what exists and where things are',
+    icon: '📍',
+    order: 10,
+    unlocked: false,
+    concepts: ['there is', 'there are', 'Is there...?'],
+    prerequisites: ['countable-uncountable'],
+    theory: {
+      explanation: "Use 'There is' for singular and uncountable nouns. Use 'There are' for plural nouns. These expressions tell us that something exists or is in a place.",
+      keyPoints: [
+        "There is + singular/uncountable (There is a book. There is some water.)",
+        "There are + plural (There are three books.)",
+        "Negative: There isn't / There aren't",
+        "Questions: Is there...? / Are there...?"
+      ]
+    },
+    examples: [
+      { english: "There is a cat on the roof.", spanish: "Hay un gato en el techo.", audio: true },
+      { english: "There are many people here.", spanish: "Hay muchas personas aquí.", audio: true },
+      { english: "Is there a bank nearby?", spanish: "¿Hay un banco cerca?", audio: true },
+      { english: "There isn't any milk.", spanish: "No hay leche.", audio: true },
+      { english: "Are there any questions?", spanish: "¿Hay preguntas?", audio: true },
+      { english: "There are some cookies in the jar.", spanish: "Hay algunas galletas en el frasco.", audio: true }
+    ],
+    quiz: [
+      {
+        id: 'tia-1',
+        type: 'fill-blank',
+        question: "There ___ a book on the table.",
+        options: ['is', 'are', 'be'],
+        correct: 'is',
+        explanation: "'A book' is singular, so use 'There is'."
+      },
+      {
+        id: 'tia-2',
+        type: 'fill-blank',
+        question: "There ___ many students in the class.",
+        options: ['is', 'are', 'be'],
+        correct: 'are',
+        explanation: "'Many students' is plural, so use 'There are'."
+      },
+      {
+        id: 'tia-3',
+        type: 'fill-blank',
+        question: "___ there a pharmacy near here?",
+        options: ['Is', 'Are', 'Do'],
+        correct: 'Is',
+        explanation: "'A pharmacy' is singular, so use 'Is there'."
+      },
+      {
+        id: 'tia-4',
+        type: 'fill-blank',
+        question: "There ___ some water in the bottle.",
+        options: ['is', 'are', 'be'],
+        correct: 'is',
+        explanation: "Water is uncountable, so use 'There is'."
+      },
+      {
+        id: 'tia-5',
+        type: 'fill-blank',
+        question: "There ___ any apples left.",
+        options: ['isn\'t', 'aren\'t', 'doesn\'t'],
+        correct: "aren't",
+        explanation: "'Apples' is plural, so use 'There aren't'."
+      },
+      {
+        id: 'tia-6',
+        type: 'multiple-choice',
+        question: "Which is correct?",
+        options: ["There is three cats.", "There are three cats.", "There be three cats."],
+        correct: "There are three cats.",
+        explanation: "'Three cats' is plural, so use 'There are'."
+      },
+      {
+        id: 'tia-7',
+        type: 'fill-blank',
+        question: "___ there any problems?",
+        options: ['Is', 'Are', 'Do'],
+        correct: 'Are',
+        explanation: "'Problems' is plural, so use 'Are there'."
+      },
+      {
+        id: 'tia-8',
+        type: 'transform',
+        question: "Make negative: 'There is a problem.'",
+        options: ["There isn't a problem.", "There aren't a problem.", "There no is a problem."],
+        correct: "There isn't a problem.",
+        explanation: "Singular negative: There isn't."
+      },
+      {
+        id: 'tia-9',
+        type: 'fill-blank',
+        question: "There ___ a lot of traffic today.",
+        options: ['is', 'are', 'be'],
+        correct: 'is',
+        explanation: "'Traffic' is uncountable, so use 'There is'."
+      },
+      {
+        id: 'tia-10',
+        type: 'multiple-choice',
+        question: "How many chairs ___ in the room?",
+        options: ["is there", "are there", "there are"],
+        correct: "are there",
+        explanation: "Questions: 'How many' + 'are there' for plural."
+      }
+    ],
+    conversationStarters: [
+      "Describe your room using 'there is' and 'there are'",
+      "What is there in your neighborhood?",
+      "Ask me what there is in my city"
+    ]
   }
 ];
 
@@ -467,9 +927,9 @@ export function isLessonAvailable(lessonId, completedLessons) {
   const lesson = getLessonById(lessonId);
   if (!lesson) return false;
   if (lesson.unlocked) return true;
-  
+
   if (!lesson.prerequisites) return true;
-  return lesson.prerequisites.every(prereqId => 
+  return lesson.prerequisites.every(prereqId =>
     completedLessons.some(cl => cl.lessonId === prereqId && cl.masteryPercent >= 70)
   );
 }
@@ -477,10 +937,10 @@ export function isLessonAvailable(lessonId, completedLessons) {
 // Get curriculum with availability status
 export function getCurriculumWithStatus(progress) {
   const completedLessons = progress?.lessons || [];
-  
+
   return CURRICULUM.map(lesson => {
     const lessonProgress = completedLessons.find(l => l.lessonId === lesson.id);
-    
+
     return {
       ...lesson,
       available: isLessonAvailable(lesson.id, completedLessons),
