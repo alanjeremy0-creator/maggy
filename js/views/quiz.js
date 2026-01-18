@@ -1,6 +1,6 @@
 /**
  * Maggy - Quiz View
- * Supports multiple question types: fill-blank, multiple-choice, reorder, listening, word-scramble
+ * Supports multiple question types: fill-blank, multiple-choice, reorder
  */
 
 import { quiz as quizModule } from '../modules/quiz.js';
@@ -41,12 +41,6 @@ function renderQuizQuestion() {
     case 'reorder':
       questionContent = renderReorderQuestion(question);
       break;
-    case 'listening':
-      questionContent = renderListeningQuestion(question);
-      break;
-    case 'word-scramble':
-      questionContent = renderWordScrambleQuestion(question);
-      break;
     default:
       // fill-blank, multiple-choice, transform, etc.
       questionContent = renderOptionsQuestion(question);
@@ -83,7 +77,7 @@ function renderQuizQuestion() {
       <!-- Footer -->
       <div class="quiz-footer">
         <button class="btn btn-primary btn-lg w-full hidden" id="next-question">
-          Continue →
+          Continuar →
         </button>
       </div>
     </div>
@@ -125,59 +119,6 @@ function renderReorderQuestion(question) {
         `).join('')}
       </div>
       <button class="btn btn-primary btn-lg w-full mt-4" id="submit-reorder" disabled>
-        Check Answer
-      </button>
-    </div>
-  `;
-}
-
-// Listening/dictation question
-function renderListeningQuestion(question) {
-  return `
-    <div class="listening-container">
-      <div class="listening-controls">
-        <button class="btn-listen" id="play-audio" title="Escuchar">
-          🔊
-        </button>
-        <button class="btn-listen-slow" id="play-audio-slow" title="Escuchar lento">
-          🐢
-        </button>
-      </div>
-      <p class="listening-hint">Escucha y escribe lo que oyes</p>
-      <input type="text" 
-             class="listening-input" 
-             id="listening-input" 
-             placeholder="Escribe la frase aquí..."
-             autocomplete="off"
-             autocapitalize="off">
-      <button class="btn btn-primary btn-lg w-full mt-4" id="submit-listening">
-        Check Answer
-      </button>
-    </div>
-  `;
-}
-
-// Word scramble question
-function renderWordScrambleQuestion(question) {
-  const scrambled = question.scrambled || '';
-  const letters = scrambled.split('');
-
-  return `
-    <div class="scramble-container">
-      <div class="scramble-letters">
-        ${letters.map((letter, i) => `
-          <span class="scramble-letter">${letter}</span>
-        `).join('')}
-      </div>
-      ${question.hint ? `<p class="scramble-hint">${question.hint}</p>` : ''}
-      <input type="text" 
-             class="scramble-input" 
-             id="scramble-input" 
-             placeholder="Escribe la palabra..."
-             autocomplete="off"
-             autocapitalize="characters"
-             style="text-transform: uppercase;">
-      <button class="btn btn-primary btn-lg w-full mt-4" id="submit-scramble">
         Check Answer
       </button>
     </div>
@@ -279,12 +220,6 @@ export async function initQuizEvents(params) {
       case 'reorder':
         setupReorderListeners(question);
         break;
-      case 'listening':
-        setupListeningListeners(question);
-        break;
-      case 'word-scramble':
-        setupScrambleListeners(question);
-        break;
       default:
         setupOptionListeners();
     }
@@ -376,81 +311,6 @@ function updateReorderSentence(container) {
   }
 }
 
-function setupListeningListeners(question) {
-  const playBtn = document.getElementById('play-audio');
-  const playSlowBtn = document.getElementById('play-audio-slow');
-  const input = document.getElementById('listening-input');
-  const submitBtn = document.getElementById('submit-listening');
-  const feedbackEl = document.getElementById('quiz-feedback');
-  const nextBtn = document.getElementById('next-question');
-
-  if (!playBtn || !input || !submitBtn) return;
-
-  // Play audio
-  playBtn.addEventListener('click', () => {
-    voice.speak(question.audio || question.correct);
-  });
-
-  // Play slow
-  playSlowBtn?.addEventListener('click', () => {
-    voice.speakSlow(question.audio || question.correct);
-  });
-
-  // Submit on Enter
-  input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      submitBtn.click();
-    }
-  });
-
-  // Submit answer
-  submitBtn.addEventListener('click', async () => {
-    const answer = input.value.trim();
-    if (!answer) return;
-
-    const result = await quizModule.submitAnswer(answer);
-
-    input.disabled = true;
-    submitBtn.disabled = true;
-
-    showFeedbackAndNext(result, feedbackEl, nextBtn);
-  });
-
-  // Auto-play audio when question loads
-  setTimeout(() => {
-    voice.speak(question.audio || question.correct);
-  }, 500);
-}
-
-function setupScrambleListeners(question) {
-  const input = document.getElementById('scramble-input');
-  const submitBtn = document.getElementById('submit-scramble');
-  const feedbackEl = document.getElementById('quiz-feedback');
-  const nextBtn = document.getElementById('next-question');
-
-  if (!input || !submitBtn) return;
-
-  // Submit on Enter
-  input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      submitBtn.click();
-    }
-  });
-
-  // Submit answer
-  submitBtn.addEventListener('click', async () => {
-    const answer = input.value.trim().toUpperCase();
-    if (!answer) return;
-
-    const result = await quizModule.submitAnswer(answer);
-
-    input.disabled = true;
-    submitBtn.disabled = true;
-
-    showFeedbackAndNext(result, feedbackEl, nextBtn);
-  });
-}
-
 function showFeedbackAndNext(result, feedbackEl, nextBtn) {
   // Show feedback
   if (feedbackEl) {
@@ -481,12 +341,6 @@ function showFeedbackAndNext(result, feedbackEl, nextBtn) {
           switch (question.type) {
             case 'reorder':
               setupReorderListeners(question);
-              break;
-            case 'listening':
-              setupListeningListeners(question);
-              break;
-            case 'word-scramble':
-              setupScrambleListeners(question);
               break;
             default:
               setupOptionListeners();
