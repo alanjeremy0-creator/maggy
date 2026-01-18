@@ -62,14 +62,56 @@ export const CURRICULUM = [
       },
       {
         id: 'tobe-4',
-        type: 'fill-blank',
-        question: "The cat ___ on the table.",
-        options: ['am', 'is', 'are'],
-        correct: 'is',
-        explanation: "With 'it' (the cat), use 'is'."
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ['am', 'I', 'student', 'a'],
+        correct: 'I am a student.',
+        explanation: "Subject + verb TO BE + complement."
       },
       {
         id: 'tobe-5',
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ['is', 'She', 'teacher', 'my'],
+        correct: 'She is my teacher.',
+        explanation: "She + is + complement."
+      },
+      {
+        id: 'tobe-6',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "We are from Mexico.",
+        correct: 'We are from Mexico.',
+        explanation: "We + are for plural subjects."
+      },
+      {
+        id: 'tobe-7',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "He is my brother.",
+        correct: 'He is my brother.',
+        explanation: "He + is for masculine singular."
+      },
+      {
+        id: 'tobe-8',
+        type: 'word-scramble',
+        question: "Descifra la palabra: PYHPA",
+        scrambled: 'PYHPA',
+        correct: 'HAPPY',
+        hint: "I am _____ (feliz)",
+        explanation: "HAPPY = feliz"
+      },
+      {
+        id: 'tobe-9',
+        type: 'word-scramble',
+        question: "Descifra la palabra: TNDSTUE",
+        scrambled: 'TNDSTUE',
+        correct: 'STUDENT',
+        hint: "I am a _____ (estudiante)",
+        explanation: "STUDENT = estudiante"
+      },
+      {
+        id: 'tobe-10',
         type: 'multiple-choice',
         question: "Which sentence is correct?",
         options: ['I is tired.', 'I am tired.', 'I are tired.'],
@@ -127,14 +169,56 @@ export const CURRICULUM = [
       },
       {
         id: 'tobe-neg-3',
-        type: 'fill-blank',
-        question: "We ___ from Spain.",
-        options: ["isn't", "aren't", "am not"],
-        correct: "aren't",
-        explanation: "With 'we', use 'aren't'."
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["isn't", "She", "here", "today"],
+        correct: "She isn't here today.",
+        explanation: "Subject + isn't + complement."
       },
       {
         id: 'tobe-neg-4',
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["aren't", "We", "ready", "yet"],
+        correct: "We aren't ready yet.",
+        explanation: "We + aren't + complement."
+      },
+      {
+        id: 'tobe-neg-5',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "They aren't at home.",
+        correct: "They aren't at home.",
+        explanation: "They + aren't for plural negatives."
+      },
+      {
+        id: 'tobe-neg-6',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "I'm not hungry.",
+        correct: "I'm not hungry.",
+        explanation: "I'm not = I am not."
+      },
+      {
+        id: 'tobe-neg-7',
+        type: 'word-scramble',
+        question: "Descifra: NITS (contracción negativa)",
+        scrambled: 'NITS',
+        correct: "ISN'T",
+        hint: "She _____ happy",
+        explanation: "ISN'T = is not"
+      },
+      {
+        id: 'tobe-neg-8',
+        type: 'word-scramble',
+        question: "Descifra: TANER (contracción negativa)",
+        scrambled: 'TANER',
+        correct: "AREN'T",
+        hint: "They _____ here",
+        explanation: "AREN'T = are not"
+      },
+      {
+        id: 'tobe-neg-9',
         type: 'transform',
         question: "Make negative: 'She is happy.'",
         options: ["She isn't happy.", "She aren't happy.", "She am not happy."],
@@ -142,7 +226,7 @@ export const CURRICULUM = [
         explanation: "She + isn't for negatives."
       },
       {
-        id: 'tobe-neg-5',
+        id: 'tobe-neg-10',
         type: 'multiple-choice',
         question: "Which is correct?",
         options: ["I amn't tired.", "I'm not tired.", "I not am tired."],
@@ -185,8 +269,8 @@ export const CURRICULUM = [
       {
         id: 'tobe-q-1',
         type: 'reorder',
-        question: "Make a question: you / are / hungry / ?",
-        options: ["Are you hungry?", "You are hungry?", "Hungry are you?"],
+        question: "Ordena para formar pregunta:",
+        words: ["you", "Are", "hungry", "?"],
         correct: "Are you hungry?",
         explanation: "Verb before subject for questions."
       },
@@ -200,14 +284,48 @@ export const CURRICULUM = [
       },
       {
         id: 'tobe-q-3',
-        type: 'fill-blank',
-        question: "___ they at the party?",
-        options: ['Am', 'Is', 'Are'],
-        correct: 'Are',
-        explanation: "With 'they', use 'Are'."
+        type: 'reorder',
+        question: "Ordena para formar pregunta:",
+        words: ["Is", "he", "teacher", "your", "?"],
+        correct: "Is he your teacher?",
+        explanation: "Is + subject + complement + ?"
       },
       {
         id: 'tobe-q-4',
+        type: 'listening',
+        question: "Escucha y escribe la pregunta:",
+        audio: "Are you from Mexico?",
+        correct: "Are you from Mexico?",
+        explanation: "Are + you for questions with 'you'."
+      },
+      {
+        id: 'tobe-q-5',
+        type: 'listening',
+        question: "Escucha y escribe la pregunta:",
+        audio: "Is she your sister?",
+        correct: "Is she your sister?",
+        explanation: "Is + she for questions with 'she'."
+      },
+      {
+        id: 'tobe-q-6',
+        type: 'word-scramble',
+        question: "Descifra: RAED (listo)",
+        scrambled: 'RAED',
+        correct: 'READY',
+        hint: "Are you _____?",
+        explanation: "READY = listo"
+      },
+      {
+        id: 'tobe-q-7',
+        type: 'word-scramble',
+        question: "Descifra: ALET (tarde)",
+        scrambled: 'ALET',
+        correct: 'LATE',
+        hint: "Am I _____?",
+        explanation: "LATE = tarde"
+      },
+      {
+        id: 'tobe-q-8',
         type: 'multiple-choice',
         question: "Answer: 'Is he your friend?' - 'Yes, ___'",
         options: ["he is.", "he's.", "is he."],
@@ -215,7 +333,15 @@ export const CURRICULUM = [
         explanation: "Short answer: Yes, he is."
       },
       {
-        id: 'tobe-q-5',
+        id: 'tobe-q-9',
+        type: 'fill-blank',
+        question: "___ they at the party?",
+        options: ['Am', 'Is', 'Are'],
+        correct: 'Are',
+        explanation: "With 'they', use 'Are'."
+      },
+      {
+        id: 'tobe-q-10',
         type: 'transform',
         question: "Make a question: 'They are students.'",
         options: ["Are they students?", "They are students?", "Is they students?"],
@@ -274,14 +400,56 @@ export const CURRICULUM = [
       },
       {
         id: 'sp-3',
-        type: 'fill-blank',
-        question: "He ___ to the gym.",
-        options: ['go', 'goes', 'going'],
-        correct: 'goes',
-        explanation: "'Go' becomes 'goes' with he/she/it."
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["works", "She", "a", "at", "bank"],
+        correct: "She works at a bank.",
+        explanation: "Subject + verb+s + complement."
       },
       {
         id: 'sp-4',
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["eat", "We", "at", "breakfast", "8"],
+        correct: "We eat breakfast at 8.",
+        explanation: "Subject + verb + object + time."
+      },
+      {
+        id: 'sp-5',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "He goes to the gym every day.",
+        correct: "He goes to the gym every day.",
+        explanation: "'Go' becomes 'goes' with he/she/it."
+      },
+      {
+        id: 'sp-6',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "I work from home.",
+        correct: "I work from home.",
+        explanation: "With 'I', verb stays the same."
+      },
+      {
+        id: 'sp-7',
+        type: 'word-scramble',
+        question: "Descifra: ROWK (trabajar)",
+        scrambled: 'ROWK',
+        correct: 'WORK',
+        hint: "I _____ every day",
+        explanation: "WORK = trabajar"
+      },
+      {
+        id: 'sp-8',
+        type: 'word-scramble',
+        question: "Descifra: EILVS (vivir + s)",
+        scrambled: 'EILVS',
+        correct: 'LIVES',
+        hint: "She _____ in Mexico",
+        explanation: "LIVES = vive (live + s)"
+      },
+      {
+        id: 'sp-9',
         type: 'multiple-choice',
         question: "Which is correct?",
         options: ["She watchs TV.", "She watches TV.", "She watch TV."],
@@ -289,7 +457,7 @@ export const CURRICULUM = [
         explanation: "Verbs ending in -ch add -es."
       },
       {
-        id: 'sp-5',
+        id: 'sp-10',
         type: 'fill-blank',
         question: "I ___ English every day.",
         options: ['study', 'studies', 'studying'],
@@ -348,14 +516,56 @@ export const CURRICULUM = [
       },
       {
         id: 'do-3',
-        type: 'fill-blank',
-        question: "He ___ eat meat.",
-        options: ["don't", "doesn't", "isn't"],
-        correct: "doesn't",
-        explanation: "With 'he', use 'doesn't'."
+        type: 'reorder',
+        question: "Ordena para formar pregunta:",
+        words: ["Do", "you", "English", "speak", "?"],
+        correct: "Do you speak English?",
+        explanation: "Do + subject + base verb + ?"
       },
       {
         id: 'do-4',
+        type: 'reorder',
+        question: "Ordena para formar negativo:",
+        words: ["doesn't", "He", "meat", "eat"],
+        correct: "He doesn't eat meat.",
+        explanation: "Subject + doesn't + base verb."
+      },
+      {
+        id: 'do-5',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "Does she live here?",
+        correct: "Does she live here?",
+        explanation: "Does + she + base verb."
+      },
+      {
+        id: 'do-6',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "I don't like coffee.",
+        correct: "I don't like coffee.",
+        explanation: "I + don't + base verb."
+      },
+      {
+        id: 'do-7',
+        type: 'word-scramble',
+        question: "Descifra: NSEOD (does + not)",
+        scrambled: 'NSEOD',
+        correct: "DOESN'T",
+        hint: "She _____ work here",
+        explanation: "DOESN'T = does not"
+      },
+      {
+        id: 'do-8',
+        type: 'word-scramble',
+        question: "Descifra: NTDO (do + not)",
+        scrambled: 'NTDO',
+        correct: "DON'T",
+        hint: "I _____ like it",
+        explanation: "DON'T = do not"
+      },
+      {
+        id: 'do-9',
         type: 'multiple-choice',
         question: "Which is correct?",
         options: ["Does she works here?", "Does she work here?", "Do she work here?"],
@@ -363,7 +573,7 @@ export const CURRICULUM = [
         explanation: "After 'does', use base form (work, not works)."
       },
       {
-        id: 'do-5',
+        id: 'do-10',
         type: 'transform',
         question: "Make negative: 'They like coffee.'",
         options: ["They don't like coffee.", "They doesn't like coffee.", "They not like coffee."],
@@ -420,20 +630,63 @@ export const CURRICULUM = [
       },
       {
         id: 'pron-3',
-        type: 'audio-match',
-        question: "Listen and repeat: 'The weather is nice.'",
-        focus: 'th',
-        target: "The weather is nice."
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "The weather is nice.",
+        correct: "The weather is nice.",
+        explanation: "Focus on the 'th' sound in 'the' and 'weather'."
       },
       {
         id: 'pron-4',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "They're not there.",
+        correct: "They're not there.",
+        explanation: "Three 'th' sounds: they're, not, there."
+      },
+      {
+        id: 'pron-5',
+        type: 'reorder',
+        question: "Ordena para formar la contracción:",
+        words: ["She", "doesn't", "it", "like"],
+        correct: "She doesn't like it.",
+        explanation: "Subject + doesn't + verb + object."
+      },
+      {
+        id: 'pron-6',
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["think", "I", "so", "don't"],
+        correct: "I don't think so.",
+        explanation: "Common phrase with contraction."
+      },
+      {
+        id: 'pron-7',
+        type: 'word-scramble',
+        question: "Descifra: HKTNI (pensar)",
+        scrambled: 'HKTNI',
+        correct: 'THINK',
+        hint: "I _____ about this",
+        explanation: "THINK = pensar (con sonido 'th')"
+      },
+      {
+        id: 'pron-8',
+        type: 'word-scramble',
+        question: "Descifra: EHTAREW (clima)",
+        scrambled: 'EHTAREW',
+        correct: 'WEATHER',
+        hint: "The _____ is nice",
+        explanation: "WEATHER = clima (con sonido 'th')"
+      },
+      {
+        id: 'pron-9',
         type: 'stress',
         question: "Where is the stress? INFORMATION",
         options: ["in-FOR-ma-tion", "in-for-MA-tion", "IN-for-ma-tion"],
         correct: "in-for-MA-tion"
       },
       {
-        id: 'pron-5',
+        id: 'pron-10',
         type: 'audio-match',
         question: "Say naturally: 'She does not like it.'",
         focus: 'contraction',
@@ -492,51 +745,53 @@ export const CURRICULUM = [
       },
       {
         id: 'pc-3',
-        type: 'fill-blank',
-        question: "They ___ playing soccer.",
-        options: ['am', 'is', 'are'],
-        correct: 'are',
-        explanation: "With 'they', use 'are'."
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["am", "I", "English", "studying"],
+        correct: "I am studying English.",
+        explanation: "Subject + am/is/are + verb-ing."
       },
       {
         id: 'pc-4',
-        type: 'fill-blank',
-        question: "He is ___ (run) very fast.",
-        options: ['runing', 'running', 'runinng'],
-        correct: 'running',
-        explanation: "Double the consonant after a short vowel: run → running."
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["is", "She", "dinner", "cooking"],
+        correct: "She is cooking dinner.",
+        explanation: "She + is + verb-ing + object."
       },
       {
         id: 'pc-5',
-        type: 'fill-blank',
-        question: "She is ___ (make) a cake.",
-        options: ['makeing', 'making', 'makking'],
-        correct: 'making',
-        explanation: "Drop the 'e' before adding -ing: make → making."
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "They are watching a movie.",
+        correct: "They are watching a movie.",
+        explanation: "They + are + verb-ing."
       },
       {
         id: 'pc-6',
-        type: 'multiple-choice',
-        question: "Which sentence is correct?",
-        options: ["I working now.", "I am working now.", "I is working now."],
-        correct: "I am working now.",
-        explanation: "Present Continuous needs: Subject + am/is/are + verb-ing."
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "The baby is sleeping.",
+        correct: "The baby is sleeping.",
+        explanation: "The baby + is + verb-ing."
       },
       {
         id: 'pc-7',
-        type: 'fill-blank',
-        question: "The children ___ playing in the garden.",
-        options: ['am', 'is', 'are'],
-        correct: 'are',
-        explanation: "With 'children' (plural), use 'are'."
+        type: 'word-scramble',
+        question: "Descifra: GNINRNU (corriendo)",
+        scrambled: 'GNINRNU',
+        correct: 'RUNNING',
+        hint: "He is _____ fast",
+        explanation: "RUNNING = corriendo (run + ning)"
       },
       {
         id: 'pc-8',
-        type: 'transform',
-        question: "Make continuous: 'She writes emails.'",
-        options: ["She is writing emails.", "She are writing emails.", "She writing emails."],
-        correct: "She is writing emails.",
-        explanation: "She + is + verb-ing."
+        type: 'word-scramble',
+        question: "Descifra: GNIKAM (haciendo)",
+        scrambled: 'GNIKAM',
+        correct: 'MAKING',
+        hint: "She is _____ a cake",
+        explanation: "MAKING = haciendo (make → making)"
       },
       {
         id: 'pc-9',
@@ -607,59 +862,61 @@ export const CURRICULUM = [
       },
       {
         id: 'will-3',
-        type: 'fill-blank',
-        question: "___ you marry me?",
-        options: ['Will', 'Do', 'Are'],
-        correct: 'Will',
-        explanation: "Questions with will: Will + subject + verb."
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["will", "I", "you", "call", "tomorrow"],
+        correct: "I will call you tomorrow.",
+        explanation: "Subject + will + verb + object + time."
       },
       {
         id: 'will-4',
+        type: 'reorder',
+        question: "Ordena para formar pregunta:",
+        words: ["Will", "you", "me", "help", "?"],
+        correct: "Will you help me?",
+        explanation: "Will + subject + verb + object + ?"
+      },
+      {
+        id: 'will-5',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "It will rain later.",
+        correct: "It will rain later.",
+        explanation: "It + will + verb for predictions."
+      },
+      {
+        id: 'will-6',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "She won't be late.",
+        correct: "She won't be late.",
+        explanation: "She + won't + verb for negatives."
+      },
+      {
+        id: 'will-7',
+        type: 'word-scramble',
+        question: "Descifra: NOWT (will not)",
+        scrambled: 'NOWT',
+        correct: "WON'T",
+        hint: "She _____ come",
+        explanation: "WON'T = will not"
+      },
+      {
+        id: 'will-8',
+        type: 'word-scramble',
+        question: "Descifra: ORRWOMTO (mañana)",
+        scrambled: 'ORRWOMTO',
+        correct: 'TOMORROW',
+        hint: "I will call you _____",
+        explanation: "TOMORROW = mañana"
+      },
+      {
+        id: 'will-9',
         type: 'multiple-choice',
         question: "Which is correct?",
         options: ["I will to go.", "I will going.", "I will go."],
         correct: "I will go.",
         explanation: "Will + base verb (no 'to' or '-ing')."
-      },
-      {
-        id: 'will-5',
-        type: 'fill-blank',
-        question: "Don't worry, I ___ forget.",
-        options: ['will', 'won\'t', 'willn\'t'],
-        correct: "won't",
-        explanation: "Won't = will not."
-      },
-      {
-        id: 'will-6',
-        type: 'transform',
-        question: "Make negative: 'They will arrive late.'",
-        options: ["They won't arrive late.", "They willn't arrive late.", "They don't will arrive late."],
-        correct: "They won't arrive late.",
-        explanation: "Will → won't for negatives."
-      },
-      {
-        id: 'will-7',
-        type: 'fill-blank',
-        question: "I think it ___ be sunny tomorrow.",
-        options: ['will', 'is', 'going'],
-        correct: 'will',
-        explanation: "Predictions about the future use 'will'."
-      },
-      {
-        id: 'will-8',
-        type: 'multiple-choice',
-        question: "Someone's at the door. - I ___ get it!",
-        options: ["will", "'ll", "Both are correct"],
-        correct: "Both are correct",
-        explanation: "I'll = I will (contraction for instant decisions)."
-      },
-      {
-        id: 'will-9',
-        type: 'fill-blank',
-        question: "___ she be at the meeting?",
-        options: ['Will', 'Does', 'Is'],
-        correct: 'Will',
-        explanation: "Future questions: Will + subject + base verb."
       },
       {
         id: 'will-10',
@@ -722,59 +979,61 @@ export const CURRICULUM = [
       },
       {
         id: 'cu-3',
-        type: 'fill-blank',
-        question: "How ___ sugar do you want?",
-        options: ['many', 'much', 'a lot'],
-        correct: 'much',
-        explanation: "Sugar is uncountable, so use 'much'."
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["much", "How", "do", "water", "you", "need", "?"],
+        correct: "How much water do you need?",
+        explanation: "How much + uncountable noun + question."
       },
       {
         id: 'cu-4',
-        type: 'fill-blank',
-        question: "How ___ friends do you have?",
-        options: ['many', 'much', 'a lot'],
-        correct: 'many',
-        explanation: "Friends is countable, so use 'many'."
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["many", "How", "do", "books", "you", "have", "?"],
+        correct: "How many books do you have?",
+        explanation: "How many + countable noun + question."
       },
       {
         id: 'cu-5',
-        type: 'multiple-choice',
-        question: "Which is UNCOUNTABLE?",
-        options: ["Book", "Information", "Apple"],
-        correct: "Information",
-        explanation: "Information cannot be counted (NOT 'an information')."
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "I don't have much time.",
+        correct: "I don't have much time.",
+        explanation: "Time is uncountable, use 'much'."
       },
       {
         id: 'cu-6',
-        type: 'fill-blank',
-        question: "I don't have ___ money.",
-        options: ['many', 'much', 'a'],
-        correct: 'much',
-        explanation: "Money is uncountable, so use 'much'."
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "There is some water in the bottle.",
+        correct: "There is some water in the bottle.",
+        explanation: "Water is uncountable, use 'some'."
       },
       {
         id: 'cu-7',
+        type: 'word-scramble',
+        question: "Descifra: YENOM (dinero)",
+        scrambled: 'YENOM',
+        correct: 'MONEY',
+        hint: "How much _____ do you have?",
+        explanation: "MONEY = dinero (uncountable)"
+      },
+      {
+        id: 'cu-8',
+        type: 'word-scramble',
+        question: "Descifra: DEBRA (pan)",
+        scrambled: 'DEBRA',
+        correct: 'BREAD',
+        hint: "I need some _____",
+        explanation: "BREAD = pan (uncountable)"
+      },
+      {
+        id: 'cu-9',
         type: 'multiple-choice',
         question: "Which is correct?",
         options: ["I need an advice.", "I need some advice.", "I need advices."],
         correct: "I need some advice.",
         explanation: "Advice is uncountable (no plural, no 'an')."
-      },
-      {
-        id: 'cu-8',
-        type: 'fill-blank',
-        question: "There are ___ oranges in the fridge.",
-        options: ['a', 'some', 'much'],
-        correct: 'some',
-        explanation: "'Some' works with plural countable nouns."
-      },
-      {
-        id: 'cu-9',
-        type: 'fill-blank',
-        question: "I have ___ homework to do.",
-        options: ['a lot of', 'many', 'a'],
-        correct: 'a lot of',
-        explanation: "Homework is uncountable. 'A lot of' works with both types."
       },
       {
         id: 'cu-10',
@@ -837,59 +1096,61 @@ export const CURRICULUM = [
       },
       {
         id: 'tia-3',
-        type: 'fill-blank',
-        question: "___ there a pharmacy near here?",
-        options: ['Is', 'Are', 'Do'],
-        correct: 'Is',
-        explanation: "'A pharmacy' is singular, so use 'Is there'."
+        type: 'reorder',
+        question: "Ordena las palabras:",
+        words: ["is", "There", "cat", "a", "the", "on", "roof"],
+        correct: "There is a cat on the roof.",
+        explanation: "There is + singular noun + location."
       },
       {
         id: 'tia-4',
-        type: 'fill-blank',
-        question: "There ___ some water in the bottle.",
-        options: ['is', 'are', 'be'],
-        correct: 'is',
-        explanation: "Water is uncountable, so use 'There is'."
+        type: 'reorder',
+        question: "Ordena para formar pregunta:",
+        words: ["there", "Is", "bank", "a", "nearby", "?"],
+        correct: "Is there a bank nearby?",
+        explanation: "Is there + singular noun + location + ?"
       },
       {
         id: 'tia-5',
-        type: 'fill-blank',
-        question: "There ___ any apples left.",
-        options: ['isn\'t', 'aren\'t', 'doesn\'t'],
-        correct: "aren't",
-        explanation: "'Apples' is plural, so use 'There aren't'."
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "There are many people here.",
+        correct: "There are many people here.",
+        explanation: "There are + plural noun + location."
       },
       {
         id: 'tia-6',
+        type: 'listening',
+        question: "Escucha y escribe la frase:",
+        audio: "There isn't any milk.",
+        correct: "There isn't any milk.",
+        explanation: "There isn't + uncountable noun (negative)."
+      },
+      {
+        id: 'tia-7',
+        type: 'word-scramble',
+        question: "Descifra: EHETR (ahí/hay)",
+        scrambled: 'EHETR',
+        correct: 'THERE',
+        hint: "_____ is a cat",
+        explanation: "THERE = ahí/hay"
+      },
+      {
+        id: 'tia-8',
+        type: 'word-scramble',
+        question: "Descifra: NYARBEE (cerca)",
+        scrambled: 'NYARBEE',
+        correct: 'NEARBY',
+        hint: "Is there a bank _____?",
+        explanation: "NEARBY = cerca"
+      },
+      {
+        id: 'tia-9',
         type: 'multiple-choice',
         question: "Which is correct?",
         options: ["There is three cats.", "There are three cats.", "There be three cats."],
         correct: "There are three cats.",
         explanation: "'Three cats' is plural, so use 'There are'."
-      },
-      {
-        id: 'tia-7',
-        type: 'fill-blank',
-        question: "___ there any problems?",
-        options: ['Is', 'Are', 'Do'],
-        correct: 'Are',
-        explanation: "'Problems' is plural, so use 'Are there'."
-      },
-      {
-        id: 'tia-8',
-        type: 'transform',
-        question: "Make negative: 'There is a problem.'",
-        options: ["There isn't a problem.", "There aren't a problem.", "There no is a problem."],
-        correct: "There isn't a problem.",
-        explanation: "Singular negative: There isn't."
-      },
-      {
-        id: 'tia-9',
-        type: 'fill-blank',
-        question: "There ___ a lot of traffic today.",
-        options: ['is', 'are', 'be'],
-        correct: 'is',
-        explanation: "'Traffic' is uncountable, so use 'There is'."
       },
       {
         id: 'tia-10',
